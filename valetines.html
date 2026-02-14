@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💌 Will You Be My Valentine? 💌</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pink: #ff6b9d;
+      --hot-pink: #ff1493;
+      --rose: #ff4d79;
+      --cream: #fff5f8;
+      --purple: #c084fc;
+      --yellow: #ffd700;
+      --green: #86efac;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ffe4ef 0%, #fff0f5 40%, #ffe8f5 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Nunito', sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ── FLOATING BACKGROUND ELEMENTS ── */
+    .bg-hearts { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+    .bg-heart {
+      position: absolute;
+      font-size: 1.5rem;
+      animation: floatUp linear infinite;
+      opacity: 0.15;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(110vh) rotate(0deg);   opacity: 0; }
+      10%  { opacity: 0.15; }
+      90%  { opacity: 0.15; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ── FLOWERS ── */
+    .flower {
+      position: absolute;
+      font-size: 1.8rem;
+      animation: sway 4s ease-in-out infinite;
+      opacity: 0.6;
+    }
+    @keyframes sway {
+      0%, 100% { transform: rotate(-10deg); }
+      50%       { transform: rotate(10deg); }
+    }
+
+    /* ── CARD ── */
+    .card {
+      position: relative;
+      z-index: 10;
+      background: white;
+      border-radius: 32px;
+      padding: 40px 44px 44px;
+      max-width: 480px;
+      width: 92vw;
+      text-align: center;
+      box-shadow:
+        0 0 0 4px var(--pink),
+        0 20px 60px rgba(255,105,157,.3),
+        0 4px 0 8px #ffe0ec;
+      animation: cardPop .6s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    @keyframes cardPop {
+      from { transform: scale(.6) rotate(-4deg); opacity: 0; }
+      to   { transform: scale(1) rotate(0deg);   opacity: 1; }
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 2rem;
+      color: var(--hot-pink);
+      margin-bottom: 6px;
+      text-shadow: 2px 2px 0 #ffb3cc;
+      animation: wobble 2s ease-in-out infinite;
+    }
+    @keyframes wobble {
+      0%,100% { transform: rotate(-2deg); }
+      50%      { transform: rotate(2deg); }
+    }
+
+    .subtitle {
+      color: #f472b6;
+      font-size: .95rem;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+
+    /* ── CAT ── */
+    .cat-wrap {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 16px;
+    }
+    .cat {
+      width: 100%;
+      height: 100%;
+      transition: transform .3s;
+    }
+
+    /* CSS-drawn cat */
+    .cat-body {
+      position: relative;
+      width: 140px;
+      height: 120px;
+      background: #ffb347;
+      border-radius: 50% 50% 46% 46%;
+      margin: 30px auto 0;
+      box-shadow: inset -8px -6px 0 rgba(0,0,0,.08);
+      transition: all .4s;
+    }
+    .cat-ear {
+      position: absolute;
+      top: -26px;
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-bottom: 36px solid #ffb347;
+    }
+    .cat-ear::after {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: -10px;
+      width: 0; height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 18px solid #ff8c94;
+    }
+    .cat-ear.left  { left: 16px; }
+    .cat-ear.right { right: 16px; }
+
+    .cat-face { position: relative; padding-top: 22px; }
+    .cat-eyes { display: flex; justify-content: center; gap: 28px; margin-bottom: 8px; }
+    .cat-eye {
+      width: 22px; height: 22px;
+      background: #2d1b00;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+    }
+    .cat-eye::after {
+      content: '';
+      position: absolute;
+      top: 3px; left: 5px;
+      width: 8px; height: 8px;
+      background: white;
+      border-radius: 50%;
+    }
+    .cat-eye.sparkle::before {
+      content: '✨';
+      position: absolute;
+      font-size: 14px;
+      top: 0; left: 0;
+      animation: spin .5s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .cat-nose {
+      width: 10px; height: 8px;
+      background: #ff6b6b;
+      border-radius: 50% 50% 40% 40%;
+      margin: 0 auto 4px;
+    }
+    .cat-mouth { color: #cc4444; font-size: 18px; line-height: 1; }
+    .cat-whiskers {
+      position: absolute;
+      bottom: 28px; left: 0; right: 0;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 6px;
+    }
+    .whisker-group { display: flex; flex-direction: column; gap: 4px; }
+    .whisker {
+      width: 40px; height: 2px;
+      background: rgba(0,0,0,.25);
+      border-radius: 2px;
+    }
+    .whisker-group.right { transform: scaleX(-1); }
+
+    .cat-tail {
+      position: absolute;
+      bottom: -20px; right: -20px;
+      width: 60px; height: 60px;
+      border: 12px solid #ffb347;
+      border-radius: 50%;
+      border-top-color: transparent;
+      border-left-color: transparent;
+      transform: rotate(45deg);
+    }
+
+    /* ── QUESTION TEXT ── */
+    .question {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: #d94f7a;
+      margin: 10px 0 22px;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { transform: scale(1); }
+      50%      { transform: scale(1.04); }
+    }
+
+    /* ── BUTTONS ── */
+    .buttons { display: flex; gap: 16px; justify-content: center; }
+    .btn {
+      padding: 14px 32px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 900;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,.2);
+      transform: scaleX(0);
+      transition: transform .3s;
+      transform-origin: left;
+    }
+    .btn:hover::after { transform: scaleX(1); }
+    .btn-yes {
+      background: linear-gradient(135deg, var(--hot-pink), var(--rose));
+      color: white;
+      box-shadow: 0 6px 20px rgba(255,20,147,.4);
+    }
+    .btn-yes:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 28px rgba(255,20,147,.5); }
+    .btn-no {
+      background: linear-gradient(135deg, #94a3b8, #64748b);
+      color: white;
+      box-shadow: 0 6px 20px rgba(100,116,139,.3);
+      transition: all .1s;
+    }
+
+    /* ── DEAD CAT STATE ── */
+    .dead-cat-body { background: #9ca3af !important; }
+    .dead-x-eye {
+      font-size: 16px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+    }
+    .threat-msg {
+      display: none;
+      background: linear-gradient(135deg, #1e1e2e, #2d1b40);
+      color: #ff6b9d;
+      border-radius: 16px;
+      padding: 18px;
+      margin: 14px 0;
+      font-size: .95rem;
+      font-weight: 700;
+      line-height: 1.6;
+      border: 2px solid #ff1493;
+      box-shadow: 0 0 20px rgba(255,20,147,.3);
+      animation: glitch .3s ease infinite;
+    }
+    @keyframes glitch {
+      0%,100% { transform: translate(0,0); }
+      25% { transform: translate(-1px, 1px); }
+      75% { transform: translate(1px,-1px); }
+    }
+    .threat-emoji { font-size: 1.6rem; }
+
+    /* ── YES STATE ── */
+    #yes-section { display: none; }
+    .happy-msg {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.4rem;
+      color: var(--hot-pink);
+      margin: 14px 0;
+      animation: rainbow 2s linear infinite;
+    }
+    @keyframes rainbow {
+      0%   { color: #ff6b9d; }
+      25%  { color: #a855f7; }
+      50%  { color: #ec4899; }
+      75%  { color: #f97316; }
+      100% { color: #ff6b9d; }
+    }
+
+    /* ── GIFT BOX ── */
+    .gift-wrap {
+      margin: 16px auto;
+      cursor: pointer;
+      display: inline-block;
+      animation: bounce 1s ease-in-out infinite;
+      position: relative;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0) rotate(-3deg); }
+      50%      { transform: translateY(-12px) rotate(3deg); }
+    }
+    .gift-wrap:hover { animation: shake .4s ease-in-out; }
+    @keyframes shake {
+      0%,100% { transform: rotate(-5deg); }
+      25% { transform: rotate(5deg); }
+      75% { transform: rotate(-5deg); }
+    }
+
+    .gift-box {
+      width: 100px; height: 80px;
+      background: linear-gradient(135deg, var(--hot-pink), var(--purple));
+      border-radius: 10px;
+      position: relative;
+      box-shadow: 0 8px 24px rgba(255,20,147,.4);
+    }
+    .gift-lid {
+      width: 110px; height: 26px;
+      background: linear-gradient(135deg, var(--rose), var(--hot-pink));
+      border-radius: 8px;
+      position: absolute;
+      top: -14px;
+      left: -5px;
+      box-shadow: 0 4px 12px rgba(255,20,147,.3);
+    }
+    .gift-ribbon-h {
+      position: absolute;
+      width: 100%; height: 8px;
+      background: var(--yellow);
+      top: 50%; transform: translateY(-50%);
+    }
+    .gift-ribbon-v {
+      position: absolute;
+      width: 8px; height: 100%;
+      background: var(--yellow);
+      left: 50%; transform: translateX(-50%);
+    }
+    .gift-bow {
+      position: absolute;
+      top: -34px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+    }
+    .gift-tag {
+      position: absolute;
+      bottom: -36px;
+      left: 50%; transform: translateX(-50%);
+      font-size: .78rem;
+      font-weight: 900;
+      color: var(--hot-pink);
+      white-space: nowrap;
+      animation: tagBounce 1s ease-in-out infinite;
+    }
+    @keyframes tagBounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-4px); }
+    }
+
+    /* ── MESSAGE OVERLAY ── */
+    .msg-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0,0,0,.5);
+      backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
+    }
+    .msg-overlay.show { display: flex; }
+    .msg-card {
+      background: white;
+      border-radius: 28px;
+      padding: 44px 36px;
+      max-width: 400px;
+      width: 88vw;
+      text-align: center;
+      box-shadow: 0 0 0 4px var(--pink), 0 30px 70px rgba(255,105,157,.5);
+      animation: msgPop .5s cubic-bezier(.34,1.56,.64,1);
+      position: relative;
+      overflow: hidden;
+    }
+    @keyframes msgPop {
+      from { transform: scale(.4) rotate(-8deg); opacity: 0; }
+      to   { transform: scale(1) rotate(0deg);   opacity: 1; }
+    }
+    .msg-card-title {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.8rem;
+      color: var(--hot-pink);
+      text-shadow: 2px 2px 0 #ffb3cc;
+      margin-bottom: 12px;
+    }
+    .msg-card-text {
+      font-size: 1rem;
+      color: #7c3f6e;
+      line-height: 1.7;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .msg-close {
+      background: linear-gradient(135deg, var(--hot-pink), var(--purple));
+      color: white;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 900;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+    }
+    .msg-close:hover { transform: scale(1.05); }
+
+    /* ── WEDDING DECO ── */
+    .wedding-deco {
+      display: none;
+      font-size: 1.6rem;
+      margin: 12px 0 4px;
+      animation: danceWedding 1.5s ease-in-out infinite;
+    }
+    @keyframes danceWedding {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+    .wedding-rings { font-size: 2rem; animation: spin360 3s linear infinite; display: inline-block; }
+    @keyframes spin360 { to { transform: rotate(360deg); } }
+
+    /* ── HEART RAIN ── */
+    .heart-rain { position: fixed; inset: 0; pointer-events: none; z-index: 50; }
+    .falling-heart {
+      position: absolute;
+      top: -50px;
+      font-size: 1.4rem;
+      animation: fallHeart linear forwards;
+    }
+    @keyframes fallHeart {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* ── FIREWORKS ── */
+    .firework {
+      position: fixed;
+      pointer-events: none;
+      z-index: 200;
+    }
+    .spark {
+      position: absolute;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      animation: sparkFly .8s ease-out forwards;
+    }
+    @keyframes sparkFly {
+      0%   { transform: translate(0,0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
+    }
+
+    /* ── FLOATING HEARTS FROM YES ── */
+    .yes-float-heart {
+      position: fixed;
+      font-size: 1.8rem;
+      z-index: 60;
+      pointer-events: none;
+      animation: yesHeartFly 1.5s ease-out forwards;
+    }
+    @keyframes yesHeartFly {
+      0%   { transform: translateY(0) scale(0); opacity: 1; }
+      50%  { transform: translateY(-100px) scale(1.4); opacity: 1; }
+      100% { transform: translateY(-200px) scale(.5); opacity: 0; }
+    }
+
+    /* ── CAT BOUNCE HAPPY ── */
+    .cat-body.happy { animation: happyCatBounce .5s ease-in-out infinite; }
+    @keyframes happyCatBounce {
+      0%,100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-10px) scale(1.05); }
+    }
+
+    /* ── CONFETTI STRIP ── */
+    .confetti-strip {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 55;
+    }
+    .confetti-piece {
+      position: absolute;
+      width: 10px; height: 14px;
+      top: -20px;
+      border-radius: 2px;
+      animation: confettiFall linear forwards;
+    }
+    @keyframes confettiFall {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(900deg); opacity: .2; }
+    }
+
+    /* ── NO BUTTON RUNAWAY ── */
+    #btn-no { transition: top .1s, left .1s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 440px) {
+      .card { padding: 28px 20px 32px; }
+      h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- FLOATING BACKGROUND HEARTS -->
+<div class="bg-hearts" id="bgHearts"></div>
+<div class="heart-rain" id="heartRain"></div>
+<div class="confetti-strip" id="confettiStrip"></div>
+
+<!-- MAIN CARD -->
+<div class="card" id="mainCard">
+  <h1>Hey You! 👀</h1>
+  <p class="subtitle">A very important question from a very important cat…</p>
+
+  <!-- CAT DRAWING -->
+  <div class="cat-wrap">
+    <div style="position:relative; width:140px; margin:0 auto;">
+      <div class="cat-body" id="catBody">
+        <div class="cat-ear left"></div>
+        <div class="cat-ear right"></div>
+        <div class="cat-face" id="catFace">
+          <div class="cat-eyes">
+            <div class="cat-eye" id="leftEye"></div>
+            <div class="cat-eye" id="rightEye"></div>
+          </div>
+          <div class="cat-nose" id="catNose"></div>
+          <div class="cat-mouth" id="catMouth">ω</div>
+        </div>
+        <div class="cat-whiskers">
+          <div class="whisker-group left">
+            <div class="whisker"></div>
+            <div class="whisker"></div>
+            <div class="whisker"></div>
+          </div>
+          <div class="whisker-group right">
+            <div class="whisker"></div>
+            <div class="whisker"></div>
+            <div class="whisker"></div>
+          </div>
+        </div>
+        <div class="cat-tail"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INITIAL ASK -->
+  <div id="ask-section">
+    <p class="question">🌸 Will you be my Valentine? 🌸</p>
+    <div class="threat-msg" id="threatMsg">
+      <div class="threat-emoji">☠️😾💀</div>
+      <div style="margin-top:8px;">
+        If you press NO again, I swear on every fish in the ocean,<br>
+        this cat WILL meet its end.<br>
+        Don't test me.<br>
+        <span style="color:#ffd700;">…I am NOT joking.</span><br>
+        You're literally killing him. RIGHT NOW. 🙀<br>
+        <span style="font-size:.85rem; color:#f9a8d4;">(please say yes he has a family)</span>
+      </div>
+    </div>
+    <div class="buttons" style="position:relative; height:60px;">
+      <button class="btn btn-yes" onclick="sayYes()">💗 YES!!</button>
+      <button class="btn btn-no" id="btn-no" onclick="sayNo()" style="position:absolute; right:0; top:0;">😐 No...</button>
+    </div>
+  </div>
+
+  <!-- YES SECTION -->
+  <div id="yes-section">
+    <p class="happy-msg" id="happyMsg">OMG YES!! 🎉💖</p>
+    <div class="gift-wrap" id="giftWrap" onclick="openGift()">
+      <div class="gift-box">
+        <div class="gift-lid">
+          <div style="position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+            <div style="width:8px;height:100%;background:var(--yellow);"></div>
+          </div>
+        </div>
+        <div class="gift-ribbon-h"></div>
+        <div class="gift-ribbon-v"></div>
+        <div class="gift-bow">🎀</div>
+      </div>
+      <div class="gift-tag">🐾 Tap me! 🐾</div>
+    </div>
+    <div class="wedding-deco" id="weddingDeco">
+      <span class="wedding-rings">💍</span>
+      <span>💒</span>
+      <span class="wedding-rings" style="animation-delay:.5s">💍</span>
+    </div>
+  </div>
+</div>
+
+<!-- MESSAGE OVERLAY -->
+<div class="msg-overlay" id="msgOverlay">
+  <div class="msg-card">
+    <div class="msg-card-title">💌 To My Valentine 💌</div>
+    <div class="msg-card-text" id="msgText"></div>
+    <button class="msg-close" onclick="closeMsg()">💖 Yay!! 💖</button>
+  </div>
+</div>
+
+<script>
+/* ─────────────────── INIT BG HEARTS ─────────────────── */
+const bgHearts = document.getElementById('bgHearts');
+const heartEmojis = ['❤️','🩷','💖','💗','💓','💞','🌸','🌺','🌷'];
+for (let i = 0; i < 25; i++) {
+  const h = document.createElement('div');
+  h.className = 'bg-heart';
+  h.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+  h.style.left = Math.random() * 100 + '%';
+  h.style.fontSize = (.8 + Math.random() * 1.8) + 'rem';
+  h.style.animationDuration = (6 + Math.random() * 12) + 's';
+  h.style.animationDelay = -(Math.random() * 15) + 's';
+  bgHearts.appendChild(h);
+}
+
+/* ─────────────────── NO BUTTON LOGIC ─────────────────── */
+let noCount = 0;
+const noBtn = document.getElementById('btn-no');
+const threatMsg = document.getElementById('threatMsg');
+const catBody = document.getElementById('catBody');
+const leftEye = document.getElementById('leftEye');
+const rightEye = document.getElementById('rightEye');
+const catNose = document.getElementById('catNose');
+const catMouth = document.getElementById('catMouth');
+
+function sayNo() {
+  noCount++;
+
+  if (noCount === 1) {
+    // Shrink the no button
+    noBtn.style.transform = 'scale(0.85)';
+    threatMsg.style.display = 'block';
+    catMouth.textContent = '🙀';
+    catBody.style.background = '#ffd580';
+    shakeCard();
+  } else if (noCount === 2) {
+    // No button runs away
+    runAway();
+    catMouth.textContent = '😿';
+    catNose.style.background = '#aaa';
+    catBody.style.background = '#d1d5db';
+  } else {
+    // Cat dies
+    killCat();
+    noBtn.style.display = 'none';
+  }
+}
+
+function runAway() {
+  const btnRect = noBtn.getBoundingClientRect();
+  const cardRect = document.getElementById('mainCard').getBoundingClientRect();
+  const maxX = cardRect.width - 130;
+  const rx = Math.floor(Math.random() * maxX);
+  const ry = Math.floor(Math.random() * 20 - 10);
+  noBtn.style.right = 'auto';
+  noBtn.style.left = rx + 'px';
+  noBtn.style.top = ry + 'px';
+  noBtn.style.transform = 'scale(0.7)';
+}
+
+function killCat() {
+  catBody.classList.add('dead-cat-body');
+  catBody.style.background = '#6b7280';
+  catBody.style.transform = 'rotate(-30deg) translateY(20px)';
+  catBody.style.opacity = '0.7';
+  leftEye.innerHTML = '<div class="dead-x-eye">✕</div>';
+  rightEye.innerHTML = '<div class="dead-x-eye">✕</div>';
+  catMouth.textContent = '😵';
+  catNose.style.background = '#6b7280';
+  threatMsg.innerHTML = `
+    <div class="threat-emoji">💀🐾☠️</div>
+    <div style="margin-top:8px; color:#ff6b9d;">
+      YOU DID THIS. YOU KILLED HIM.<br>
+      His name was Mr. Whiskers.<br>
+      He had 9 lives and you just took ALL of them.<br>
+      <span style="color:#ffd700;">Are you happy now??? 😭</span><br>
+      <br>
+      <span style="font-size:.8rem; color:#f9a8d4;">
+        (Seriously though… just say yes 🥺 he can be revived by love)
+      </span>
+    </div>
+  `;
+  threatMsg.style.display = 'block';
+  // Show a tiny "revive" option
+  const revive = document.createElement('button');
+  revive.textContent = '💗 OK FINE, YES!!';
+  revive.className = 'btn btn-yes';
+  revive.style.marginTop = '14px';
+  revive.style.width = '100%';
+  revive.onclick = sayYes;
+  document.getElementById('ask-section').appendChild(revive);
+}
+
+function shakeCard() {
+  const card = document.getElementById('mainCard');
+  card.style.animation = 'none';
+  card.style.transition = 'transform .1s';
+  let shakes = 0;
+  const interval = setInterval(() => {
+    card.style.transform = `rotate(${shakes % 2 === 0 ? -3 : 3}deg)`;
+    shakes++;
+    if (shakes > 8) { clearInterval(interval); card.style.transform = ''; }
+  }, 60);
+}
+
+/* ─────────────────── YES LOGIC ─────────────────── */
+function sayYes() {
+  // Revive / make cat happy
+  catBody.style.background = '#ffb347';
+  catBody.style.transform = '';
+  catBody.style.opacity = '1';
+  catBody.style.transition = 'all .4s';
+  catBody.classList.add('happy');
+  leftEye.innerHTML = ''; leftEye.classList.add('sparkle');
+  rightEye.innerHTML = ''; rightEye.classList.add('sparkle');
+  // Heart eyes
+  leftEye.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:14px;">💖</div>';
+  rightEye.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:14px;">💖</div>';
+  catMouth.textContent = 'ω';
+  catNose.style.background = '#ff6b6b';
+
+  document.getElementById('ask-section').style.display = 'none';
+  document.getElementById('yes-section').style.display = 'block';
+  threatMsg.style.display = 'none';
+
+  // Heart explosion
+  burstHearts();
+  // Confetti
+  launchConfetti();
+}
+
+/* ─────────────────── GIFT BOX ─────────────────── */
+let giftOpened = false;
+function openGift() {
+  if (giftOpened) return;
+  giftOpened = true;
+
+  // Fireworks!
+  for (let i = 0; i < 12; i++) {
+    setTimeout(() => launchFirework(), i * 150);
+  }
+
+  // Show wedding deco
+  document.getElementById('weddingDeco').style.display = 'block';
+
+  // Heart rain
+  heartRainBurst();
+
+  // Replace gift with open box emoji
+  const gw = document.getElementById('giftWrap');
+  gw.style.animation = 'none';
+  gw.innerHTML = '<div style="font-size:4rem; animation:cardPop .4s ease both;">🎁✨</div>';
+
+  // Show message overlay
+  setTimeout(() => {
+    document.getElementById('msgText').innerHTML = `
+      Roses are red,<br>
+      Violets are blue,<br>
+      This cat came all the way here...<br>
+      Just to say: <strong style="color:var(--hot-pink)">I like you! 💖</strong><br><br>
+      Will you hold my paw 🐾<br>
+      And be my Valentine today?<br><br>
+      <span style="font-size:1.4rem">🌸💍🌸</span><br>
+      <span style="font-size:.85rem; color:#f472b6;">
+        (You already said yes, so no take-backs!)
+      </span>
+    `;
+    document.getElementById('msgOverlay').classList.add('show');
+    // More fireworks on overlay
+    for (let i = 0; i < 8; i++) {
+      setTimeout(() => launchFirework(), i * 200);
+    }
+  }, 800);
+}
+
+function closeMsg() {
+  document.getElementById('msgOverlay').classList.remove('show');
+  // Extra celebration
+  for (let i = 0; i < 20; i++) {
+    setTimeout(() => launchFirework(), i * 120);
+  }
+  heartRainBurst();
+}
+
+/* ─────────────────── FIREWORKS ─────────────────── */
+function launchFirework() {
+  const colors = ['#ff6b9d','#ffd700','#c084fc','#ff1493','#86efac','#f97316','#38bdf8'];
+  const x = 10 + Math.random() * 80;
+  const y = 10 + Math.random() * 60;
+  const fw = document.createElement('div');
+  fw.className = 'firework';
+  fw.style.left = x + 'vw';
+  fw.style.top  = y + 'vh';
+  document.body.appendChild(fw);
+
+  const count = 18;
+  for (let i = 0; i < count; i++) {
+    const angle = (360 / count) * i;
+    const dist  = 40 + Math.random() * 60;
+    const rad   = (angle * Math.PI) / 180;
+    const dx = Math.cos(rad) * dist + 'px';
+    const dy = Math.sin(rad) * dist + 'px';
+    const spark = document.createElement('div');
+    spark.className = 'spark';
+    spark.style.background = colors[Math.floor(Math.random() * colors.length)];
+    spark.style.setProperty('--dx', dx);
+    spark.style.setProperty('--dy', dy);
+    spark.style.animationDuration = (.5 + Math.random() * .5) + 's';
+    fw.appendChild(spark);
+  }
+  setTimeout(() => fw.remove(), 1000);
+}
+
+/* ─────────────────── HEART BURST ─────────────────── */
+function burstHearts() {
+  const emojis = ['💖','💗','💓','💞','🩷','✨','🌸'];
+  for (let i = 0; i < 20; i++) {
+    setTimeout(() => {
+      const h = document.createElement('div');
+      h.className = 'yes-float-heart';
+      h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      h.style.left = 10 + Math.random() * 80 + 'vw';
+      h.style.top  = 50 + Math.random() * 40 + 'vh';
+      h.style.animationDuration = (1 + Math.random()) + 's';
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 2000);
+    }, i * 80);
+  }
+}
+
+/* ─────────────────── HEART RAIN ─────────────────── */
+function heartRainBurst() {
+  const rain = document.getElementById('heartRain');
+  const emojis = ['❤️','💖','💗','🌸','🌺','🌷','✨','💕'];
+  for (let i = 0; i < 40; i++) {
+    setTimeout(() => {
+      const h = document.createElement('div');
+      h.className = 'falling-heart';
+      h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      h.style.left = Math.random() * 100 + 'vw';
+      h.style.fontSize = (.8 + Math.random() * 1.6) + 'rem';
+      h.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+      rain.appendChild(h);
+      setTimeout(() => h.remove(), 4000);
+    }, i * 60);
+  }
+}
+
+/* ─────────────────── CONFETTI ─────────────────── */
+function launchConfetti() {
+  const colors = ['#ff6b9d','#ffd700','#c084fc','#ff1493','#86efac','#f97316','#38bdf8','#fb923c'];
+  const strip = document.getElementById('confettiStrip');
+  for (let i = 0; i < 80; i++) {
+    setTimeout(() => {
+      const c = document.createElement('div');
+      c.className = 'confetti-piece';
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.animationDuration = (2 + Math.random() * 3) + 's';
+      c.style.animationDelay = Math.random() * .5 + 's';
+      c.style.transform = `rotate(${Math.random()*360}deg)`;
+      strip.appendChild(c);
+      setTimeout(() => c.remove(), 6000);
+    }, i * 30);
+  }
+}
+
+/* ─────────────────── FLOWERS ─────────────────── */
+const flowerEmojis = ['🌸','🌺','🌷','🌼','💐'];
+const flowerPositions = [
+  { top:'5%',  left:'3%' },
+  { top:'5%',  right:'3%' },
+  { top:'50%', left:'1%' },
+  { top:'50%', right:'1%' },
+  { bottom:'8%',left:'4%' },
+  { bottom:'8%',right:'4%' },
+  { top:'25%', left:'2%' },
+  { top:'25%', right:'2%' },
+];
+flowerPositions.forEach((pos, i) => {
+  const f = document.createElement('div');
+  f.className = 'flower';
+  f.textContent = flowerEmojis[i % flowerEmojis.length];
+  Object.assign(f.style, pos, { position:'fixed', zIndex:'5', fontSize:'2rem', animationDelay: (i*.4)+'s' });
+  document.body.appendChild(f);
+});
+</script>
+</body>
+</html>
